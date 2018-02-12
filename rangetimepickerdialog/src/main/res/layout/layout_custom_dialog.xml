@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FEFEFE"
+    android:layout_margin="0dp"
+    app:cardCornerRadius="50dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/CyanWater"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed">
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Start time"
+                android:icon="@drawable/ic_start_time_black_24dp" />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="End time"
+                android:icon="@drawable/ic_end_time_black_24dp"/>
+        </android.support.design.widget.TabLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayoutTimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabLayout"
+            android:gravity="center">
+            <TimePicker
+                android:id="@+id/timePickerStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:headerBackground="@color/CyanWater">
+            </TimePicker>
+            <TimePicker
+                android:id="@+id/timePickerEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:headerBackground="@color/CyanWater"
+                android:visibility="gone">
+            </TimePicker>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/relativeLayoutTimePicker">
+            <Button android:id="@+id/btnPositiveDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Ok"
+                android:textColor="@color/CyanWater"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+            <Button android:id="@+id/btnNegativeDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Cancel"
+                android:textColor="@color/CyanWater"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
