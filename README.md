@@ -6,12 +6,9 @@ Simple Android Library that provide you a custom dialog that allow you to set a 
 
 Screenshot
 :-------------------------
-![](https://i.imgur.com/TbBcjS5.jpg?1)
-![](https://i.imgur.com/Fta9uUw.jpg?1)
-![](https://i.imgur.com/vgIhIwr.jpg?1)
-![](https://i.imgur.com/kzzgFX7.jpg?1)
-![](https://i.imgur.com/Sh8BHNB.jpg?1)
-![](https://i.imgur.com/6MRme3P.jpg?1)
+![](https://i.imgur.com/TbBcjS5.jpg?1) ![](https://i.imgur.com/Fta9uUw.jpg?1)
+![](https://i.imgur.com/vgIhIwr.jpg?1) ![](https://i.imgur.com/8a4R16O.jpg?1)
+![](https://i.imgur.com/Sh8BHNB.jpg?1) ![](https://i.imgur.com/6MRme3P.jpg?1)
 
 ## Install
 Add this to your project build.gradle
@@ -26,7 +23,7 @@ Add this to your module build.gradle
 
 ```gradle
    dependencies {
-        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.0'
+        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.1'
     }
 
 ```
@@ -36,6 +33,7 @@ In your <b>activity</b> (Default method "newInstance()"):
     // Create an instance of the dialog fragment and show it
     RangeTimePickerDialog dialog = new RangeTimePickerDialog();
     dialog.newInstance();
+    dialog.setRadiusDialog(20); // Set radius of dialog (default is 50)
     dialog.setIs24HourView(true); // Indicates if the format should be 24 hours
     dialog.setColorBackgroundHeader(R.color.colorPrimary); // Set Color of Background header dialog
     dialog.setColorTextButton(R.color.colorPrimaryDark); // Set Text color of button
@@ -82,12 +80,12 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
    {
       if (resultCode == Activity.RESULT_OK)
       {
-         if (data.getExtras().containsKey("hourStart"))
+         if (data.getExtras().containsKey(RangeTimePickerDialog.HOUR_START))
          {
-            int hourStart = data.getExtras().getInt("hourStart");
-            int hourEnd = data.getExtras().getInt("hourEnd");
-            int minuteStart = data.getExtras().getInt("minuteStart");
-            int minuteEnd = data.getExtras().getInt(",minuteEnd");
+            int hourStart = data.getExtras().getInt(RangeTimePickerDialog.HOUR_START);
+            int hourEnd = data.getExtras().getInt(RangeTimePickerDialog.HOUR_END);
+            int minuteStart = data.getExtras().getInt(RangeTimePickerDialog.MINUTE_START);
+            int minuteEnd = data.getExtras().getInt(RangeTimePickerDialog.MINUTE_END);
             // Use the returned value
             Toast.makeText(getActivity(), "Time start:"+hourStart+":"+minuteStart+"\nUntil: "+hourEnd+":"+minuteEnd, Toast.LENGTH_SHORT).show();
          }
