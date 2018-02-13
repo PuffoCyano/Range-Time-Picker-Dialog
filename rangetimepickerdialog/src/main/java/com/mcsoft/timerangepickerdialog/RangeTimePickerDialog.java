@@ -43,7 +43,10 @@ public class RangeTimePickerDialog extends DialogFragment
     private String messageErrorRangeTime = "Error: set a end time greater than start time";
     private String textBtnPositive = "Ok";
     private String textBtnNegative = "Cancel";
+    private String textTabStart = "Start time";
+    private String textTabEnd = "End time";
     private int radiusDialog = 50; // Default 50
+    private boolean validateRange = true;
 
     public interface ISelectedTime
     {
@@ -112,6 +115,9 @@ public class RangeTimePickerDialog extends DialogFragment
         btnNegative.setTextColor(ContextCompat.getColor(getActivity(), colorTextButton));
         btnPositive.setText(textBtnPositive);
         btnNegative.setText(textBtnNegative);
+
+        tabLayout.getTabAt(0).setText(textTabStart);
+        tabLayout.getTabAt(1).setText(textTabEnd);
 
         // Create the AlertDialog object and return it
         mAlertDialog = builder.create();
@@ -185,17 +191,24 @@ public class RangeTimePickerDialog extends DialogFragment
                             hourEnd = timePickerEnd.getCurrentHour();
                             minuteEnd = timePickerEnd.getCurrentMinute();
                         }
-                        if(hourEnd>hourStart)
+                        if(validateRange)
                         {
-                            flagCorrect = true;
-                        }
-                        else if(hourEnd==hourStart && minuteEnd>minuteStart)
-                        {
-                            flagCorrect = true;
+                            if(hourEnd>hourStart)
+                            {
+                                flagCorrect = true;
+                            }
+                            else if(hourEnd==hourStart && minuteEnd>minuteStart)
+                            {
+                                flagCorrect = true;
+                            }
+                            else
+                            {
+                                flagCorrect = false;
+                            }
                         }
                         else
                         {
-                            flagCorrect = false;
+                            flagCorrect = true;
                         }
                         if(flagCorrect)
                         {
@@ -259,49 +272,112 @@ public class RangeTimePickerDialog extends DialogFragment
         }
     }
 
+    /**
+     * Set color of tab item when it is unselected
+     * @param colorTabUnselected (eg. R.color.my_color)
+     */
     public void setColorTabUnselected(int colorTabUnselected)
     {
         this.colorTabUnselected = colorTabUnselected;
     }
 
+    /**
+     * Set color of tab item when it is selected
+     * @param colorTabSelected (eg. R.color.my_color)
+     */
     public void setColorTabSelected(int colorTabSelected)
     {
         this.colorTabSelected = colorTabSelected;
     }
 
+    /**
+     * Set button text color
+     * @param colorTextButton (eg. R.color.my_color)
+     */
     public void setColorTextButton(int colorTextButton)
     {
         this.colorTextButton = colorTextButton;
     }
 
+    /**
+     * Set background color of header dialog
+     * @param colorBackgroundHeader (eg. R.color.my_color)
+     */
     public void setColorBackgroundHeader(int colorBackgroundHeader)
     {
         this.colorBackgroundHeader = colorBackgroundHeader;
     }
 
+    /**
+     * Set true if you want see time into 24 hour format
+     * @param is24HourView true = 24 hour format, false = am/pm format
+     */
     public void setIs24HourView(boolean is24HourView)
     {
         this.is24HourView = is24HourView;
     }
 
+    /**
+     * Set message error that appears when you select a end time greater than start time (only if validateRange is true)
+     * @param messageErrorRangeTime String
+     */
     public void setMessageErrorRangeTime(String messageErrorRangeTime)
     {
         this.messageErrorRangeTime = messageErrorRangeTime;
     }
 
+    /**
+     * Set positive button text
+     * @param textBtnPositive (eg. Ok or Accept)
+     */
     public void setTextBtnPositive(String textBtnPositive)
     {
         this.textBtnPositive = textBtnPositive;
     }
 
+    /**
+     * Set negative button text
+     * @param textBtnNegative (eg. Cancel or Close)
+     */
     public void setTextBtnNegative(String textBtnNegative)
     {
         this.textBtnNegative = textBtnNegative;
     }
 
+    /**
+     * Set dialog radius (default is 50)
+     * @param radiusDialog Set to 0 if you want remove radius
+     */
     public void setRadiusDialog(int radiusDialog)
     {
         this.radiusDialog = radiusDialog;
+    }
+
+    /**
+     * Set tab start text
+     * @param textTabStart (eg. Start time)
+     */
+    public void setTextTabStart(String textTabStart)
+    {
+        this.textTabStart = textTabStart;
+    }
+
+    /**
+     * Set tab end text
+     * @param textTabEnd (eg. End time)
+     */
+    public void setTextTabEnd(String textTabEnd)
+    {
+        this.textTabEnd = textTabEnd;
+    }
+
+    /**
+     * Set true if you want validate the range time (start time < end time). Set false if you want select any time
+     * @param validateRange true = validation, false = no validation
+     */
+    public void setValidateRange(boolean validateRange)
+    {
+        this.validateRange = validateRange;
     }
 
     private void setColorTabLayout(int colorTabSelected, int colorTabUnselected, int colorBackgroundHeader)
