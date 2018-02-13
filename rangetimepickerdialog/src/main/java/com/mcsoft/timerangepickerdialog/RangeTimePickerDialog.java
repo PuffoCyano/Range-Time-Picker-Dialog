@@ -31,13 +31,13 @@ public class RangeTimePickerDialog extends DialogFragment
     private TimePicker timePickerStart, timePickerEnd;
     private Button btnPositive, btnNegative;
 
-    private int colorTabUnselected;
-    private int colorTabSelected;
-    private int colorTextButton;
-    private int colorBackgroundHeader;
+    private int colorTabUnselected = R.color.White;
+    private int colorTabSelected = R.color.Yellow;
+    private int colorTextButton = R.color.Yellow;
+    private int colorBackgroundHeader = R.color.CyanWater;
     private boolean is24HourView = true;
     private String messageErrorRangeTime = "Error: set a end time greater than start time";
-        private String textBtnPositive = "Ok";
+    private String textBtnPositive = "Ok";
     private String textBtnNegative = "Cancel";
 
     public interface ISelectedTime
