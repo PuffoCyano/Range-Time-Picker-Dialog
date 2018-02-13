@@ -6,8 +6,8 @@ Simple Android Library that provide you a custom dialog that allow you to set a 
 
 Screenshot
 :-------------------------
-![](https://i.imgur.com/TbBcjS5.jpg?1) ![](https://i.imgur.com/Fta9uUw.jpg?1)
-![](https://i.imgur.com/vgIhIwr.jpg?1) ![](https://i.imgur.com/8a4R16O.jpg?1)
+![](https://i.imgur.com/TbBcjS5.jpg?1) ![](https://i.imgur.com/c2J691x.jpg?1)
+![](https://i.imgur.com/R9PtA0x.jpg?1) ![](https://i.imgur.com/8a4R16O.jpg?1)
 ![](https://i.imgur.com/Sh8BHNB.jpg?1) ![](https://i.imgur.com/6MRme3P.jpg?1)
 
 ## Install
@@ -23,7 +23,7 @@ Add this to your module build.gradle
 
 ```gradle
    dependencies {
-        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.1'
+        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.2'
     }
 
 ```
@@ -93,7 +93,20 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
    }
 }
 ```
-
+## Main methods
+ * `setColorTabUnselected(int colorTabUnselected)`: Set color of tab item when it is unselected
+ * `setColorTabSelected(int colorTabSelected)`: Set color of tab item when it is selected
+ * `setColorTextButton(int colorTextButton)`: Set button text color
+ * `setColorBackgroundHeader(int colorBackgroundHeader)`: Set background color of header dialog
+ * `setIs24HourView(boolean is24HourView)`: Set true if you want see time into 24 hour format
+ * `setMessageErrorRangeTime(String messageErrorRangeTime)`: Set message error that appears when you select a end time greater than start time (only if "validateRange" is true)
+ * `setTextBtnPositive(String textBtnPositive)`: Set positive button text
+ * `setTextBtnNegative(String textBtnNegative)`: Set negative button text
+ * `setRadiusDialog(int radiusDialog)`: Set dialog radius (default is 50)
+ * `setTextTabStart(String textTabStart)`: Set tab start text
+ * `setTextTabEnd(String textTabEnd)`: Set tab end text
+ * `setValidateRange(boolean validateRange)`:Set true if you want validate the range time (start time < end time). Set false if you want select any time
+ 
 ## License
 ```
 Copyright 2018 Alessandro Marino
