@@ -6,12 +6,12 @@ Simple Android Library that provide you a custom dialog that allow you to set a 
 
 Screenshot
 :-------------------------
-![](https://i.imgur.com/TbBcjS5.jpg)
-![](https://i.imgur.com/Fta9uUw.jpg)
+![](https://i.imgur.com/TbBcjS5.jpg?1)
+![](https://i.imgur.com/Fta9uUw.jpg?1)
 ![](https://i.imgur.com/vgIhIwr.jpg)
-![](https://i.imgur.com/kzzgFX7.jpg)
-![](https://i.imgur.com/Sh8BHNB.jpg)
-![](https://i.imgur.com/6MRme3P.jpg)
+![](https://i.imgur.com/kzzgFX7.jpg?1)
+![](https://i.imgur.com/Sh8BHNB.jpg?1)
+![](https://i.imgur.com/6MRme3P.jpg?1)
 
 ## Install
 Add this to your project build.gradle
