@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements RangeTimePickerDi
    {
       // Create an instance of the dialog fragment and show it
       RangeTimePickerDialog dialog = new RangeTimePickerDialog();
-      dialog.newInstance(R.color.CyanWater, R.color.White, R.color.Yellow, R.color.Yellow, true);
+      dialog.newInstance();
+      dialog.setIs24HourView(true);
+      dialog.setColorBackgroundHeader(R.color.colorPrimary);
+      dialog.setColorTextButton(R.color.colorPrimaryDark);
       FragmentManager fragmentManager = getFragmentManager();
-      dialog.setMessageErrorRangeTime("Devi selezionare una data finale maggiore di quella iniziale");
-      dialog.setTextBtnNegative("Annulla");
-      dialog.setTextBtnPositive("Conferma");
       dialog.show(fragmentManager, "");
    }
 
