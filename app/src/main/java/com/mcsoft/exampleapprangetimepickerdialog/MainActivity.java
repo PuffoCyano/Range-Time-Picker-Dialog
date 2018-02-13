@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements RangeTimePickerDi
       RangeTimePickerDialog dialog = new RangeTimePickerDialog();
       dialog.newInstance();
       dialog.setIs24HourView(true);
+      dialog.setRadiusDialog(20);
       dialog.setColorBackgroundHeader(R.color.colorPrimary);
       dialog.setColorTextButton(R.color.colorPrimaryDark);
       FragmentManager fragmentManager = getFragmentManager();

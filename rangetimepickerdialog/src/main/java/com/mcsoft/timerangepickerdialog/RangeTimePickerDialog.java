@@ -24,6 +24,10 @@ import android.widget.Toast;
 
 public class RangeTimePickerDialog extends DialogFragment
 {
+    public static String HOUR_START = "hourStart";
+    public static String MINUTE_START = "minuteStart";
+    public static String HOUR_END = "hourEnd";
+    public static String MINUTE_END = "minuteEnd";
     private AlertDialog mAlertDialog;
     private boolean dialogDismissed;
     private TabLayout tabLayout;
@@ -39,6 +43,7 @@ public class RangeTimePickerDialog extends DialogFragment
     private String messageErrorRangeTime = "Error: set a end time greater than start time";
     private String textBtnPositive = "Ok";
     private String textBtnNegative = "Cancel";
+    private int radiusDialog = 50; // Default 50
 
     public interface ISelectedTime
     {
@@ -94,6 +99,9 @@ public class RangeTimePickerDialog extends DialogFragment
         btnPositive = (Button) dialogView.findViewById(R.id.btnPositiveDialog);
         btnNegative = (Button) dialogView.findViewById(R.id.btnNegativeDialog);
         CardView cardView = (CardView) dialogView.findViewById(R.id.ly_root);
+
+        // Set radius of dialog
+        cardView.setRadius(radiusDialog);
 
         setColorTabLayout(colorTabSelected, colorTabUnselected, colorBackgroundHeader);
 
@@ -196,10 +204,10 @@ public class RangeTimePickerDialog extends DialogFragment
                             {
                                 // Return value to Fragment
                                 Bundle bundle = new Bundle();
-                                bundle.putInt("hourStart", hourStart);
-                                bundle.putInt("minuteStart", minuteStart);
-                                bundle.putInt("hourEnd", hourEnd);
-                                bundle.putInt("minuteEnd", minuteEnd);
+                                bundle.putInt(HOUR_START, hourStart);
+                                bundle.putInt(MINUTE_START, minuteStart);
+                                bundle.putInt(HOUR_END, hourEnd);
+                                bundle.putInt(MINUTE_END, minuteEnd);
                                 Intent intent = new Intent().putExtras(bundle);
                                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                             }
@@ -289,6 +297,11 @@ public class RangeTimePickerDialog extends DialogFragment
     public void setTextBtnNegative(String textBtnNegative)
     {
         this.textBtnNegative = textBtnNegative;
+    }
+
+    public void setRadiusDialog(int radiusDialog)
+    {
+        this.radiusDialog = radiusDialog;
     }
 
     private void setColorTabLayout(int colorTabSelected, int colorTabUnselected, int colorBackgroundHeader)
