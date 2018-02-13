@@ -8,7 +8,7 @@ Screenshot
 :-------------------------
 ![](https://i.imgur.com/TbBcjS5.jpg?1)
 ![](https://i.imgur.com/Fta9uUw.jpg?1)
-![](https://i.imgur.com/vgIhIwr.jpg)
+![](https://i.imgur.com/vgIhIwr.jpg?1)
 ![](https://i.imgur.com/kzzgFX7.jpg?1)
 ![](https://i.imgur.com/Sh8BHNB.jpg?1)
 ![](https://i.imgur.com/6MRme3P.jpg?1)
