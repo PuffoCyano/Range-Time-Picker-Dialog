@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements RangeTimePickerDi
       dialog.setTextBtnNegative("Close");
       dialog.setValidateRange(false);
       dialog.setColorBackgroundHeader(R.color.colorPrimary);
+      dialog.setColorBackgroundTimePickerHeader(R.color.colorPrimary);
       dialog.setColorTextButton(R.color.colorPrimaryDark);
       FragmentManager fragmentManager = getFragmentManager();
       dialog.show(fragmentManager, "");
