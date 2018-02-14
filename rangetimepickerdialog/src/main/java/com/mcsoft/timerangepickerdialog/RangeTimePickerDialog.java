@@ -430,12 +430,15 @@ public class RangeTimePickerDialog extends DialogFragment
                 mTimePickerField.setAccessible(true);
                 final TimePicker mTimePicker = (TimePicker) mTimePickerField.get(rangeTimePickerDialog);
                 int headerId = Resources.getSystem().getIdentifier("time_header", "id", "android");
-                int headerTextId = Resources.getSystem().getIdentifier("input_header", "id", "android");
                 final View header = mTimePicker.findViewById(headerId);
-                final View headerText = mTimePicker.findViewById(headerTextId);
-                headerText.setBackgroundColor(color);
-                headerText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 header.setBackgroundColor(color);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                {
+                    int headerTextId = Resources.getSystem().getIdentifier("input_header", "id", "android");
+                    final View headerText = mTimePicker.findViewById(headerTextId);
+                    headerText.setBackgroundColor(color);
+                    headerText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                }
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
