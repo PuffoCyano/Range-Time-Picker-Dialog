@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.lang.reflect.Field;
 
 public class RangeTimePickerDialog extends DialogFragment
 {
@@ -39,6 +42,7 @@ public class RangeTimePickerDialog extends DialogFragment
     private int colorTabSelected = R.color.Yellow;
     private int colorTextButton = R.color.Yellow;
     private int colorBackgroundHeader = R.color.CyanWater;
+    private int colorBackgroundTimePickerHeader = R.color.CyanWater;
     private boolean is24HourView = true;
     private String messageErrorRangeTime = "Error: set a end time greater than start time";
     private String textBtnPositive = "Ok";
@@ -63,7 +67,7 @@ public class RangeTimePickerDialog extends DialogFragment
 
     /**
      * Create a new instance with own attributes (All color MUST BE in this format "R.color.my_color")
-     * @param colorBackgroundHeader Color of Background header dialog
+     * @param colorBackgroundHeader Color of Background header dialog and timePicker
      * @param colorTabUnselected Color of tab when unselected
      * @param colorTabSelected Color of tab when selected
      * @param colorTextButton Text color of button
@@ -75,6 +79,7 @@ public class RangeTimePickerDialog extends DialogFragment
         RangeTimePickerDialog f = new RangeTimePickerDialog();
         this.colorTabUnselected = colorTabUnselected;
         this.colorBackgroundHeader = colorBackgroundHeader;
+        this.colorBackgroundTimePickerHeader = colorBackgroundHeader;
         this.colorTabSelected = colorTabSelected;
         this.colorTextButton = colorTextButton;
         this.is24HourView = is24HourView;
@@ -102,6 +107,10 @@ public class RangeTimePickerDialog extends DialogFragment
         btnPositive = (Button) dialogView.findViewById(R.id.btnPositiveDialog);
         btnNegative = (Button) dialogView.findViewById(R.id.btnNegativeDialog);
         CardView cardView = (CardView) dialogView.findViewById(R.id.ly_root);
+
+        // Set TimePicker header background color
+        setTimePickerHeaderBackgroundColor(this, ContextCompat.getColor(getActivity(), colorBackgroundTimePickerHeader), "timePickerStart");
+        setTimePickerHeaderBackgroundColor(this, ContextCompat.getColor(getActivity(), colorBackgroundTimePickerHeader), "timePickerEnd");
 
         // Set radius of dialog
         cardView.setRadius(radiusDialog);
@@ -380,6 +389,15 @@ public class RangeTimePickerDialog extends DialogFragment
         this.validateRange = validateRange;
     }
 
+    /**
+     * Set background color of header timePicker
+     * @param colorBackgroundTimePickerHeader (eg. R.color.my_color)
+     */
+    public void setColorBackgroundTimePickerHeader(int colorBackgroundTimePickerHeader)
+    {
+        this.colorBackgroundTimePickerHeader = colorBackgroundTimePickerHeader;
+    }
+
     private void setColorTabLayout(int colorTabSelected, int colorTabUnselected, int colorBackgroundHeader)
     {
         tabLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), colorBackgroundHeader));
@@ -393,5 +411,36 @@ public class RangeTimePickerDialog extends DialogFragment
         tabIconColor = ContextCompat.getColor(getActivity(), colorTabUnselected);
         tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         //tabLayout.getTabAt(1).getIcon().setTint(Color.WHITE);
+    }
+
+    /**
+     * Set color of timePicker'header
+     * @param rangeTimePickerDialog Dialog where is located the timePicker
+     * @param color Color to set
+     * @param nameTimePicker id of timePicker declared into xml (eg. my_time_picker [android:id="@+id/my_time_picker"])
+     */
+    private void setTimePickerHeaderBackgroundColor(RangeTimePickerDialog rangeTimePickerDialog, int color, String nameTimePicker)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            try
+            {
+                Field mTimePickerField;
+                mTimePickerField = RangeTimePickerDialog.class.getDeclaredField(nameTimePicker);
+                mTimePickerField.setAccessible(true);
+                final TimePicker mTimePicker = (TimePicker) mTimePickerField.get(rangeTimePickerDialog);
+                int headerId = Resources.getSystem().getIdentifier("time_header", "id", "android");
+                int headerTextId = Resources.getSystem().getIdentifier("input_header", "id", "android");
+                final View header = mTimePicker.findViewById(headerId);
+                final View headerText = mTimePicker.findViewById(headerTextId);
+                headerText.setBackgroundColor(color);
+                headerText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                header.setBackgroundColor(color);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
