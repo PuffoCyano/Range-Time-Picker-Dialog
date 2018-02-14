@@ -23,7 +23,7 @@ Add this to your module build.gradle
 
 ```gradle
    dependencies {
-        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.2'
+        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.3'
     }
 
 ```
@@ -93,7 +93,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
    }
 }
 ```
-## Main methods
+## Methods
  * `setColorTabUnselected(int colorTabUnselected)`: Set color of tab item when it is unselected
  * `setColorTabSelected(int colorTabSelected)`: Set color of tab item when it is selected
  * `setColorTextButton(int colorTextButton)`: Set button text color
@@ -106,6 +106,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
  * `setTextTabStart(String textTabStart)`: Set tab start text
  * `setTextTabEnd(String textTabEnd)`: Set tab end text
  * `setValidateRange(boolean validateRange)`:Set true if you want validate the range time (start time < end time). Set false if you want select any time
+  * `setColorBackgroundTimePickerHeader(int colorBackgroundTimePickerHeader)`: Set background color of header timePicker
  
 ## License
 ```
