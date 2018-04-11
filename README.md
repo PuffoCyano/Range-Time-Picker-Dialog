@@ -23,7 +23,7 @@ Add this to your module build.gradle
 
 ```gradle
    dependencies {
-        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.4'
+        compile 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.5'
     }
 
 ```
