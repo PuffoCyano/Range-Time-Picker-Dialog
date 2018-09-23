@@ -51,6 +51,7 @@ public class RangeTimePickerDialog extends DialogFragment
     private String textTabEnd = "End time";
     private int radiusDialog = 50; // Default 50
     private boolean validateRange = true;
+    private boolean isMinutesEnabled = true;
 
     public interface ISelectedTime
     {
@@ -127,6 +128,13 @@ public class RangeTimePickerDialog extends DialogFragment
 
         tabLayout.getTabAt(0).setText(textTabStart);
         tabLayout.getTabAt(1).setText(textTabEnd);
+
+        // Enable/Disable minutes
+        if (!isMinutesEnabled)
+        {
+            setMinutesEnabled(this, isMinutesEnabled, "timePickerStart");
+            setMinutesEnabled(this, isMinutesEnabled, "timePickerEnd");
+        }
 
         // Create the AlertDialog object and return it
         mAlertDialog = builder.create();
@@ -444,6 +452,61 @@ public class RangeTimePickerDialog extends DialogFragment
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void enableMinutes(boolean value)
+    {
+        isMinutesEnabled = value;
+    }
+
+    private void setMinutesEnabled(RangeTimePickerDialog rangeTimePickerDialog, boolean value, String nameTimePicker)
+    {
+        try
+        {
+            Field mTimePickerField;
+            mTimePickerField = RangeTimePickerDialog.class.getDeclaredField(nameTimePicker);
+            mTimePickerField.setAccessible(true);
+            final TimePicker mTimePicker = (TimePicker) mTimePickerField.get(rangeTimePickerDialog);
+            int minutesId, hoursId;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+                minutesId = Resources.getSystem().getIdentifier("minutes", "id", "android");
+                hoursId = Resources.getSystem().getIdentifier("hours", "id", "android");
+            }
+            else
+            {
+                minutesId = Resources.getSystem().getIdentifier("minute", "id", "android");
+                hoursId = Resources.getSystem().getIdentifier("hour", "id", "android");
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                final int toggleModeId = Resources.getSystem().getIdentifier("toggle_mode", "id", "android");
+                final View toggleModeView = mTimePicker.findViewById(toggleModeId);
+                toggleModeView.callOnClick();
+                toggleModeView.setVisibility(View.GONE);
+            }
+            final View minutesView = mTimePicker.findViewById(minutesId);
+            final View hoursView = mTimePicker.findViewById(hoursId);
+            minutesView.setEnabled(value);
+            mTimePicker.setCurrentMinute(0);
+
+            mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener()
+            {
+                @Override
+                public void onTimeChanged(TimePicker view, int hourOfDay, int minute)
+                {
+                    mTimePicker.setCurrentMinute(0);
+                    hoursView.setSoundEffectsEnabled(false);
+                    hoursView.performClick();
+                    hoursView.setSoundEffectsEnabled(true);
+                }
+            });
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e)
+        {
+           e.printStackTrace();
         }
     }
 }
