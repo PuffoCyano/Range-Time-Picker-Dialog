@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements RangeTimePickerDi
       dialog.setColorBackgroundHeader(R.color.colorPrimary);
       dialog.setColorBackgroundTimePickerHeader(R.color.colorPrimary);
       dialog.setColorTextButton(R.color.colorPrimaryDark);
-      dialog.enableMinutes(false);
+      dialog.enableMinutes(true);
       FragmentManager fragmentManager = getFragmentManager();
       dialog.show(fragmentManager, "");
    }

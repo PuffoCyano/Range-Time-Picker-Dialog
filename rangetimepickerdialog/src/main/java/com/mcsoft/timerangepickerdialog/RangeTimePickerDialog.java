@@ -455,6 +455,10 @@ public class RangeTimePickerDialog extends DialogFragment
         }
     }
 
+    /**
+     * Method to enable/disable minutes into range time dialog
+     * @param value true = minutes enabled; false = minutes disabled
+     */
     public void enableMinutes(boolean value)
     {
         isMinutesEnabled = value;
