@@ -23,7 +23,7 @@ Add this to your module build.gradle
 
 ```gradle
    dependencies {
-        implementation 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.7'
+        implementation 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.8'
     }
 
 ```
@@ -108,6 +108,12 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
  * `setValidateRange(boolean validateRange)`:Set true if you want validate the range time (start time < end time). Set false if you want select any time
   * `setColorBackgroundTimePickerHeader(int colorBackgroundTimePickerHeader)`: Set background color of header timePicker
   * `enableMinutes(boolean value)`: Enable or disable minutes clock
+  * `setInitialStartClock(int hour, int minute)`: Method to set initial start clock
+  * `setInitialEndClock(int hour, int minute)`: Method to set initial end clock
+  * `setStartTabIcon(int startTabIcon)`: Method to change start tab icon
+  * `setEndTabIcon(int endTabIcon)`: Method to change end tab icon
+  * `setInitialOpenedTab(InitialOpenedTab initialOpenedTab)`: Method to select which tab are selected on open (START_CLOCK_TAB or END_CLOCK_TAB)
+  * `setInputKeyboardAsDefault(boolean inputKeyboardAsDefault)`: Method to set keyboard input as default (Only on Oreo device)
  
 ## License
 ```

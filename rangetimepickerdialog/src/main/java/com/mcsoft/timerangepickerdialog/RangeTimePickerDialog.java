@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RangeTimePickerDialog extends DialogFragment
 {
@@ -38,6 +41,8 @@ public class RangeTimePickerDialog extends DialogFragment
     private TimePicker timePickerStart, timePickerEnd;
     private Button btnPositive, btnNegative;
 
+    private int startTabIcon = R.drawable.ic_start_time_black_24dp;
+    private int endTabIcon = R.drawable.ic_end_time_black_24dp;
     private int colorTabUnselected = R.color.White;
     private int colorTabSelected = R.color.Yellow;
     private int colorTextButton = R.color.Yellow;
@@ -52,6 +57,19 @@ public class RangeTimePickerDialog extends DialogFragment
     private int radiusDialog = 50; // Default 50
     private boolean validateRange = true;
     private boolean isMinutesEnabled = true;
+    private Date currentTime = Calendar.getInstance().getTime();
+    private int initialStarHour = currentTime.getHours();
+    private int initialStartMinute = currentTime.getMinutes();
+    private int initialEndHour = currentTime.getHours();
+    private int initialEndMinute = currentTime.getMinutes();
+    private InitialOpenedTab initialOpenedTab = InitialOpenedTab.START_CLOCK_TAB;
+    private boolean inputKeyboardAsDefault = false;
+
+    public enum InitialOpenedTab
+    {
+        START_CLOCK_TAB,
+        END_CLOCK_TAB
+    }
 
     public interface ISelectedTime
     {
@@ -121,6 +139,54 @@ public class RangeTimePickerDialog extends DialogFragment
         timePickerStart.setIs24HourView(is24HourView);
         timePickerEnd.setIs24HourView(is24HourView);
 
+        // Set initial clock values
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            timePickerStart.setHour(initialStarHour);
+            timePickerStart.setMinute(initialStartMinute);
+        }
+        else
+        {
+            timePickerStart.setCurrentHour(initialStarHour);
+            timePickerStart.setCurrentMinute(initialStartMinute);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            timePickerEnd.setHour(initialEndHour);
+            timePickerEnd.setMinute(initialEndMinute);
+        }
+        else
+        {
+            timePickerEnd.setCurrentHour(initialEndHour);
+            timePickerEnd.setCurrentMinute(initialEndMinute);
+        }
+
+        // Set icon tabs
+        tabLayout.getTabAt(0).setIcon(startTabIcon);
+        tabLayout.getTabAt(1).setIcon(endTabIcon);
+
+        // Set initial opened tab
+        if (initialOpenedTab == InitialOpenedTab.START_CLOCK_TAB)
+        {
+            tabLayout.getTabAt(0).select();
+            int tabIconColor = ContextCompat.getColor(getActivity(), colorTabSelected);
+            tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+            int tabIconColorUnselect = ContextCompat.getColor(getActivity(), colorTabUnselected);
+            tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorUnselect, PorterDuff.Mode.SRC_IN);
+            timePickerStart.setVisibility(View.VISIBLE);
+            timePickerEnd.setVisibility(View.GONE);
+        }
+        else if (initialOpenedTab == InitialOpenedTab.END_CLOCK_TAB)
+        {
+            tabLayout.getTabAt(1).select();
+            int tabIconColor = ContextCompat.getColor(getActivity(), colorTabSelected);
+            tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+            int tabIconColorUnselect = ContextCompat.getColor(getActivity(), colorTabUnselected);
+            tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColorUnselect, PorterDuff.Mode.SRC_IN);
+            timePickerEnd.setVisibility(View.VISIBLE);
+            timePickerStart.setVisibility(View.GONE);
+        }
+
         btnPositive.setTextColor(ContextCompat.getColor(getActivity(), colorTextButton));
         btnNegative.setTextColor(ContextCompat.getColor(getActivity(), colorTextButton));
         btnPositive.setText(textBtnPositive);
@@ -128,6 +194,16 @@ public class RangeTimePickerDialog extends DialogFragment
 
         tabLayout.getTabAt(0).setText(textTabStart);
         tabLayout.getTabAt(1).setText(textTabEnd);
+
+        // Set keyboard input as default
+        if (inputKeyboardAsDefault)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                setInputKeyboardAsDefault("timePickerStart");
+                setInputKeyboardAsDefault("timePickerEnd");
+            }
+        }
 
         // Enable/Disable minutes
         if (!isMinutesEnabled)
@@ -511,6 +587,86 @@ public class RangeTimePickerDialog extends DialogFragment
         } catch (IllegalAccessException e)
         {
            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to set initial start clock
+     * @param hour Initial hour
+     * @param minute Initial minute
+     */
+    public void setInitialStartClock(int hour, int minute)
+    {
+        initialStarHour = hour;
+        initialStartMinute = minute;
+    }
+
+    /**
+     * Method to set initial end clock
+     * @param hour Initial hour
+     * @param minute Initial minute
+     */
+    public void setInitialEndClock(int hour, int minute)
+    {
+        initialEndHour = hour;
+        initialEndMinute = minute;
+    }
+
+    /**
+     * Method to change start tab icon
+     * @param startTabIcon Resource ID of start tab icon
+     */
+    public void setStartTabIcon(int startTabIcon)
+    {
+        this.startTabIcon = startTabIcon;
+    }
+
+    /**
+     * Method to change end tab icon
+     * @param endTabIcon Resource ID of end tab icon
+     */
+    public void setEndTabIcon(int endTabIcon)
+    {
+        this.endTabIcon = endTabIcon;
+    }
+
+    /**
+     * Method to select which tab are selected on open
+     * @param initialOpenedTab START_CLOCK_TAB or END_CLOCK_TAB
+     */
+    public void setInitialOpenedTab(InitialOpenedTab initialOpenedTab)
+    {
+        this.initialOpenedTab = initialOpenedTab;
+    }
+
+    /**
+     * Method to set keyboard input as default (Only on Oreo device)
+     * @param inputKeyboardAsDefault true = keyboard set as default, false: otherwise
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setInputKeyboardAsDefault(boolean inputKeyboardAsDefault)
+    {
+        this.inputKeyboardAsDefault = inputKeyboardAsDefault;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setInputKeyboardAsDefault(String timePickerName)
+    {
+        Field mTimePickerField;
+        try
+        {
+            mTimePickerField = RangeTimePickerDialog.class.getDeclaredField(timePickerName);
+            mTimePickerField.setAccessible(true);
+            final TimePicker mTimePicker = (TimePicker) mTimePickerField.get(RangeTimePickerDialog.this);
+            final int toggleModeId = Resources.getSystem().getIdentifier("toggle_mode", "id", "android");
+            final View toggleModeView = mTimePicker.findViewById(toggleModeId);
+            toggleModeView.callOnClick();
+        } catch (NoSuchFieldException e)
+        {
+            e.printStackTrace();
+        } catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
         }
     }
 }
