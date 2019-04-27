@@ -37,6 +37,7 @@ In your <b>activity</b> (Default method "newInstance()"):
     dialog.setIs24HourView(true); // Indicates if the format should be 24 hours
     dialog.setColorBackgroundHeader(R.color.colorPrimary); // Set Color of Background header dialog
     dialog.setColorTextButton(R.color.colorPrimaryDark); // Set Text color of button
+    dialog.setMinimumSelectedTimeInMinutes(0,true); // Set minimum time selection for user second argument is validateRange which must                                                              be true for minimumselectedTime check 
     FragmentManager fragmentManager = getFragmentManager();
     dialog.show(fragmentManager, "");
 ```
@@ -114,6 +115,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
   * `setEndTabIcon(int endTabIcon)`: Method to change end tab icon
   * `setInitialOpenedTab(InitialOpenedTab initialOpenedTab)`: Method to select which tab are selected on open (START_CLOCK_TAB or END_CLOCK_TAB)
   * `setInputKeyboardAsDefault(boolean inputKeyboardAsDefault)`: Method to set keyboard input as default (Only on Oreo device)
+  *  `setMinimumSelectedTimeInMinutes(0,true);` : Method to set minimum time limit for user to be selected
  
 ## License
 ```
