@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements RangeTimePickerDi
       dialog.enableMinutes(true);
       dialog.setStartTabIcon(R.drawable.ic_access_time_black_24dp);
       dialog.setEndTabIcon(R.drawable.ic_timelapse_black_24dp);
+      dialog.setMinimumSelectedTimeInMinutes(30,true);
 //      dialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
 //      dialog.setInitialStartClock(3,45);
 //      dialog.setInitialEndClock(16,33);
