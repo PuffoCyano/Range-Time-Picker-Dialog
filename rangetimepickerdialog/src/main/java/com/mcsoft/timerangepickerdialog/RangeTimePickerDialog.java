@@ -2,7 +2,6 @@ package com.mcsoft.timerangepickerdialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,6 +16,8 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
