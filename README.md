@@ -114,6 +114,8 @@ public void onActivityResult(int requestCode, int resultCode, Intent data)
   * `setEndTabIcon(int endTabIcon)`: Method to change end tab icon
   * `setInitialOpenedTab(InitialOpenedTab initialOpenedTab)`: Method to select which tab are selected on open (START_CLOCK_TAB or END_CLOCK_TAB)
   * `setInputKeyboardAsDefault(boolean inputKeyboardAsDefault)`: Method to set keyboard input as default (Only on Oreo device)
+  * `setMinimumTime(int hour, int minute)`: Method to set the minimum start and end time
+  * `setMaximumTime(int hour, int minute)`: Method to set the maximum start and end time
  
 ## License
 ```

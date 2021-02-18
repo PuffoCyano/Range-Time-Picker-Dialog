@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ExampleAppRangeTimePickerDialog.iml" filepath="$PROJECT_DIR$/ExampleAppRangeTimePickerDialog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rangetimepickerdialog/rangetimepickerdialog.iml" filepath="$PROJECT_DIR$/rangetimepickerdialog/rangetimepickerdialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Range-Time-Picker-Dialog.iml" filepath="$PROJECT_DIR$/.idea/modules/Range-Time-Picker-Dialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Range-Time-Picker-Dialog.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Range-Time-Picker-Dialog.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rangetimepickerdialog/Range-Time-Picker-Dialog.rangetimepickerdialog.iml" filepath="$PROJECT_DIR$/.idea/modules/rangetimepickerdialog/Range-Time-Picker-Dialog.rangetimepickerdialog.iml" />
     </modules>
   </component>
 </project>

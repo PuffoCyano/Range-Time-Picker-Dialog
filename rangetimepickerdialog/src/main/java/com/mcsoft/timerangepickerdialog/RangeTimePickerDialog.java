@@ -2,7 +2,6 @@ package com.mcsoft.timerangepickerdialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,12 +10,14 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabItem;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -61,6 +63,10 @@ public class RangeTimePickerDialog extends DialogFragment {
     private int initialStartMinute = currentTime.getMinutes();
     private int initialEndHour = currentTime.getHours();
     private int initialEndMinute = currentTime.getMinutes();
+    private int minTimeHour;
+    private int minTimeMinute;
+    private int maxTimeHour;
+    private int maxTimeMinute;
     private InitialOpenedTab initialOpenedTab = InitialOpenedTab.START_CLOCK_TAB;
     private boolean inputKeyboardAsDefault = false;
     private int range = 0;
@@ -269,6 +275,36 @@ public class RangeTimePickerDialog extends DialogFragment {
                         } else {
                             flagCorrect = true;
                         }
+                        //Check to validate the min and max constraints
+                        if (isMinAndMaxConstrained()){
+                            Calendar calendar=Calendar.getInstance();
+                            Calendar calendarStart=Calendar.getInstance();
+                            calendarStart.setTime(calendar.getTime());
+                            calendarStart.set(Calendar.HOUR_OF_DAY, hourStart);
+                            calendarStart.set(Calendar.MINUTE, minuteStart);
+                            Calendar calendarEnd=Calendar.getInstance();
+                            calendarEnd.setTime(calendar.getTime());
+                            calendarEnd.set(Calendar.HOUR_OF_DAY, hourEnd);
+                            calendarEnd.set(Calendar.MINUTE, minuteEnd);
+                            if (minTimeHour>0 || minTimeMinute>0){
+                                calendar.set(Calendar.HOUR_OF_DAY, minTimeHour);
+                                calendar.set(Calendar.MINUTE, minTimeMinute);
+                                //If the start time or end time is less than the current time
+                                if (calendarStart.getTimeInMillis()<calendar.getTimeInMillis() ||
+                                        calendarEnd.getTimeInMillis()<calendar.getTimeInMillis()){
+                                    flagCorrect=false;
+                                }
+                            }
+                            if (maxTimeHour>0 || maxTimeMinute>0){
+                                calendar.set(Calendar.HOUR_OF_DAY, maxTimeHour);
+                                calendar.set(Calendar.MINUTE, maxTimeMinute);
+                                //If the start time or end time is less than the current time
+                                if (calendarStart.getTimeInMillis()>calendar.getTimeInMillis() ||
+                                        calendarEnd.getTimeInMillis()>calendar.getTimeInMillis()){
+                                    flagCorrect=false;
+                                }
+                            }
+                        }
                         if (flagCorrect) {
                             /*check if range is not 0 , for time validate range must be true*/
                             if (range == 0 || !validateRange) {
@@ -311,7 +347,33 @@ public class RangeTimePickerDialog extends DialogFragment {
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        } else {
+                        }
+                        //Check if selected time is between the minTime and maxTime
+                        else if (isMinAndMaxConstrained()){
+                            String text="";
+                            boolean hasOther=false;
+                            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+                            Calendar calendar=Calendar.getInstance();
+                            if (minTimeHour>0 || minTimeMinute>0){
+                                calendar.set(Calendar.HOUR_OF_DAY, minTimeHour);
+                                calendar.set(Calendar.MINUTE, minTimeMinute);
+                                text+="from "+simpleDateFormat.format(calendar.getTime());
+                                hasOther=true;
+                            }
+                            if (hasOther){
+                                text+=" and ";
+                            }
+                            if (maxTimeHour>0 || maxTimeMinute>0){
+                                calendar.set(Calendar.HOUR_OF_DAY, maxTimeHour);
+                                calendar.set(Calendar.MINUTE, maxTimeMinute);
+                                text+="before "+simpleDateFormat.format(calendar.getTime());
+                                hasOther=true;
+                            }
+                            Toast.makeText(getActivity(),
+                                    "Error: Select a time " +text,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
                             Toast.makeText(getActivity(), messageErrorRangeTime, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -319,6 +381,14 @@ public class RangeTimePickerDialog extends DialogFragment {
             }
         });
         return mAlertDialog;
+    }
+
+    /**
+     * Check whether the start time and end time are constrained to a minimum or maximum time
+     * @return minimumTime is greater than midnight or maximum time is greater than midnight
+     */
+    private boolean isMinAndMaxConstrained() {
+        return minTimeHour>0 || minTimeMinute>0 || maxTimeHour>0 || maxTimeMinute>0;
     }
 
     /*instantiate the Calander instances and sending it to
@@ -610,6 +680,28 @@ public class RangeTimePickerDialog extends DialogFragment {
     public void setInitialEndClock(int hour, int minute) {
         initialEndHour = hour;
         initialEndMinute = minute;
+    }
+
+    /**
+     * Method to set minimum time
+     *
+     * @param hour   Minimum hour
+     * @param minute Minimum minute
+     */
+    public void setMinimumTime(int hour, int minute) {
+        minTimeHour = hour;
+        minTimeMinute = minute;
+    }
+
+    /**
+     * Method to set maximum time
+     *
+     * @param hour   Maximum hour
+     * @param minute Maximum minute
+     */
+    public void setMaximumTime(int hour, int minute) {
+        maxTimeHour = hour;
+        maxTimeMinute = minute;
     }
 
     /**
